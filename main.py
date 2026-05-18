@@ -52,6 +52,8 @@ from pygit.remote import (
     pull_repository,
 )
 
+from pygit.deploy import deploy
+
 def main():
     parser = argparse.ArgumentParser(
         prog="pygit",
@@ -309,6 +311,17 @@ def main():
         default="main",
         help="Branch to pull"
     )
+    
+    deploy_parser = subparsers.add_parser(
+        "deploy",
+        help="Deploy latest snapshot to Pico W",
+        description="Send latest committed files to Raspberry Pi Pico W"
+    )
+
+    deploy_parser.add_argument(
+        "ip",
+        help="Pico W IP address"
+    )
 
     args = parser.parse_args()
 
@@ -387,7 +400,10 @@ def main():
             args.source,
             args.destination,
             args.branch
-        )  
+        ) 
+        
+    elif args.command == "deploy":
+        deploy(args.ip)     
 
     else:
         parser.print_help()
