@@ -23,7 +23,11 @@ def gc():
         with open(branch_path, "r") as f:
             commit_sha1 = f.read().strip()
 
-        collect_reachable_objects(commit_sha1, reachable)
+        collect_reachable_objects(
+            ".",
+            commit_sha1,
+            reachable
+        )
 
     deleted = 0
 
